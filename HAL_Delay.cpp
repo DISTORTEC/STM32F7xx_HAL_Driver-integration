@@ -17,6 +17,12 @@
 | global functions
 +---------------------------------------------------------------------------------------------------------------------*/
 
+/**
+ * \brief Delay current thread.
+ *
+ * \param [in] delayMs is the delay length, milliseconds
+ */
+
 extern "C" void HAL_Delay(const uint32_t delayMs)
 {
 	distortos::ThisThread::sleepFor(std::chrono::milliseconds{delayMs});
