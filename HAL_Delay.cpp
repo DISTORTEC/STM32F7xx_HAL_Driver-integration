@@ -17,7 +17,7 @@
 | global functions
 +---------------------------------------------------------------------------------------------------------------------*/
 
-void HAL_Delay(const uint32_t delayMs)
+extern "C" void HAL_Delay(const uint32_t delayMs)
 {
 	distortos::ThisThread::sleepFor(std::chrono::milliseconds{delayMs});
 }
