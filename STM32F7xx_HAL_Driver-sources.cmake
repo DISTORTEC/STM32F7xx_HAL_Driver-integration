@@ -9,7 +9,8 @@
 
 add_library(STM32F7xx_HAL_Driver-integration STATIC
 		${CMAKE_CURRENT_LIST_DIR}/HAL_Delay.cpp
-		${CMAKE_CURRENT_LIST_DIR}/HAL_GetTick.cpp)
+		${CMAKE_CURRENT_LIST_DIR}/HAL_GetTick.cpp
+		${CMAKE_CURRENT_LIST_DIR}/SystemCoreClock.cpp)
 target_link_libraries(STM32F7xx_HAL_Driver-integration PUBLIC
 		STM32F7xx_HAL_Driver)
 
