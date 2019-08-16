@@ -7,23 +7,14 @@
 # distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
-# objects need to be linked before STM32F7xx_HAL_Driver
-
-add_library(STM32F7xx_HAL_Driver-integration-pre STATIC
-		${CMAKE_CURRENT_LIST_DIR}/SystemCoreClock.cpp)
-target_include_directories(STM32F7xx_HAL_Driver-integration-pre PUBLIC
-		$<TARGET_PROPERTY:STM32F7xx_HAL_Driver,INTERFACE_INCLUDE_DIRECTORIES>)
-target_link_libraries(STM32F7xx_HAL_Driver-integration-pre PUBLIC
-		distortos::distortos)
-target_link_libraries(STM32F7xx_HAL_Driver PUBLIC
-		STM32F7xx_HAL_Driver-integration-pre)
-
-# functions need to be linked after STM32F7xx_HAL_Driver
-
-add_library(STM32F7xx_HAL_Driver-integration-post STATIC
+add_library(STM32F7xx_HAL_Driver-integration OBJECT
 		${CMAKE_CURRENT_LIST_DIR}/HAL_Delay.cpp
-		${CMAKE_CURRENT_LIST_DIR}/HAL_GetTick.cpp)
-target_link_libraries(STM32F7xx_HAL_Driver-integration-post PUBLIC
-		STM32F7xx_HAL_Driver)
+		${CMAKE_CURRENT_LIST_DIR}/HAL_GetTick.cpp
+		${CMAKE_CURRENT_LIST_DIR}/SystemCoreClock.cpp)
+target_include_directories(STM32F7xx_HAL_Driver-integration PUBLIC
+		$<TARGET_PROPERTY:STM32F7xx_HAL_Driver,INTERFACE_INCLUDE_DIRECTORIES>)
 
-add_library(STM32F7xx_HAL_Driver::STM32F7xx_HAL_Driver ALIAS STM32F7xx_HAL_Driver-integration-post)
+target_sources(STM32F7xx_HAL_Driver PRIVATE
+		$<TARGET_OBJECTS:STM32F7xx_HAL_Driver-integration>)
+
+add_library(STM32F7xx_HAL_Driver::STM32F7xx_HAL_Driver ALIAS STM32F7xx_HAL_Driver)
